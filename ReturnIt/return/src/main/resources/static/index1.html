@@ -1,0 +1,614 @@
+
+
+
+
+
+
+ <!DOCTYPE html>
+<!-- Save as: src/main/resources/static/index.html -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReturnIt · Lost something? Let's bring it home.</title>
+<meta name="description" content="ReturnIt is a lost-item recovery network.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#050b1f;--navy2:#0b1636;--card:#101c42;--blue:#2f5bff;--cyan:#22e4ff;--cream:#f7f3ea;--mut:#a9b4d6;--ok:#3ddc97;--warn:#ffc857;--bad:#ff6b7d;--r:18px;
+--disp:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;--body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:auto}
+body{font-family:var(--body);background:var(--navy);color:var(--cream);line-height:1.55;overflow-x:hidden;min-height:100vh}
+img,svg,video,canvas{max-width:100%}
+h1,h2,h3,.brand{font-family:var(--disp);line-height:1.1;letter-spacing:-.02em}
+a{color:var(--cyan)}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+.nav{position:sticky;top:0;z-index:40;transition:background .3s,box-shadow .3s;background:transparent}
+.nav.solid{background:rgba(5,11,31,.96);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;flex-wrap:wrap}
+.brand{font-size:1.5rem;font-weight:800;color:var(--cream);text-decoration:none}.brand b{color:var(--cyan)}
+#links{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+#links a{color:var(--mut);text-decoration:none;padding:8px 12px;border-radius:99px;font-weight:500}
+#links a:hover{color:var(--cream)}#links a[aria-current=page]{color:var(--navy);background:var(--cyan)}
+#burger{display:none}
+.btn{font:inherit;font-weight:700;border:0;border-radius:99px;padding:12px 22px;cursor:pointer;background:var(--blue);color:#fff;transition:transform .2s,box-shadow .2s,opacity .2s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(47,91,255,.45)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.cy{background:var(--cyan);color:var(--navy)}.btn.gh{background:transparent;border:2px solid rgba(255,255,255,.25);color:var(--cream)}
+.btn.sm{padding:8px 16px;font-size:.9rem}.btn.bad{background:var(--bad);color:var(--navy)}.btn.ok{background:var(--ok);color:var(--navy)}
+.page[hidden]{display:none}
+.page{padding-bottom:72px;animation:pg .45s ease both}
+@keyframes pg{from{opacity:0;transform:translateY(10px)}}
+.sec-h{padding:48px 0 24px}.sec-h h1{font-size:clamp(2rem,5vw,3.4rem)}.sec-h p{color:var(--mut);max-width:60ch;margin-top:10px}
+.hero{position:relative;margin-top:-72px;padding:140px 0 60px;background:radial-gradient(900px 500px at 75% 30%,rgba(47,91,255,.4),transparent 70%),radial-gradient(600px 400px at 10% 90%,rgba(34,228,255,.15),transparent 70%);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);font-weight:800}.hero h1 em{font-style:normal;color:var(--cyan)}
+.hero p.lead{color:var(--mut);font-size:1.15rem;margin:18px 0 26px;max-width:46ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.tile{display:block;background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:24px;color:var(--cream);text-decoration:none;transition:transform .25s,border-color .25s}
+.tile:hover{transform:translateY(-6px);border-color:var(--cyan)}.tile h3{margin:8px 0}.tile p{color:var(--mut)}.tile span{color:var(--cyan);font-weight:700}
+.art{width:100%;height:auto}
+.dash{stroke-dasharray:6 8;animation:flow 1.8s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-28}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pl 2.2s ease-out infinite}
+@keyframes pl{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+.float{animation:fl 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.f2{animation-delay:-1.5s}.f3{animation-delay:-3s}
+@keyframes fl{50%{transform:translateY(-10px) rotate(2deg)}}
+.glow{animation:gl 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes gl{50%{transform:scale(1.15)}}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+.bar form{display:flex;gap:8px;flex:1 1 280px}
+input,textarea,select{font:inherit;width:100%;background:var(--navy2);color:var(--cream);border:1.5px solid rgba(255,255,255,.18);border-radius:12px;padding:12px 14px}
+input:focus,textarea:focus,select:focus{border-color:var(--cyan)}
+textarea{min-height:110px;resize:vertical}
+label{display:block;font-weight:700;margin:14px 0 6px}
+.err{color:var(--bad);font-size:.88rem;min-height:1.2em;margin-top:4px}
+.chip{font:inherit;cursor:pointer;background:transparent;color:var(--mut);border:1.5px solid rgba(255,255,255,.2);border-radius:99px;padding:6px 14px}
+.chip[aria-pressed=true]{background:var(--cream);color:var(--navy);border-color:var(--cream)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0;overflow-wrap:anywhere;animation:up .5s both;animation-delay:calc(var(--i,0)*60ms)}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.card h3{font-size:1.2rem}.card p{color:var(--mut)}
+.item-photo{width:100%;height:190px;object-fit:cover;border-radius:13px;background:linear-gradient(135deg,#172652,#0b1636);border:1px solid rgba(255,255,255,.08)}
+.item-photo[hidden]{display:none}.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.badge{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:99px;background:#fff2;align-self:flex-start}
+.s-LOST,.s-PENDING{background:rgba(255,200,87,.18);color:var(--warn)}.s-FOUND,.s-APPROVED{background:rgba(34,228,255,.16);color:var(--cyan)}
+.s-RETURNED,.s-COMPLETED{background:rgba(61,220,151,.16);color:var(--ok)}.s-REJECTED{background:rgba(255,107,125,.16);color:var(--bad)}
+.skel{height:190px;border-radius:var(--r);background:linear-gradient(100deg,var(--card) 30%,#1a2a5e 50%,var(--card) 70%);background-size:200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.state{text-align:center;padding:48px 16px;background:var(--card);border-radius:var(--r);border:1px dashed rgba(255,255,255,.2)}
+.state p{color:var(--mut);margin:8px 0 16px}
+.panel{background:var(--card);border-radius:var(--r);padding:24px;border:1px solid rgba(255,255,255,.08)}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
+.cam video,.cam img{width:100%;border-radius:12px;background:#000;display:block;margin:10px 0}
+.note{font-size:.85rem;color:var(--warn)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;counter-reset:s}
+.steps .card::before{counter-increment:s;content:counter(s);font:800 2.4rem var(--disp);color:var(--cyan)}
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(2,5,16,.8);display:grid;place-items:center;padding:16px;animation:fi .2s}
+.overlay[hidden]{display:none}@keyframes fi{from{opacity:0}}
+.dialog{position:relative;background:var(--navy2);border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:28px;width:min(560px,100%);max-height:90vh;overflow:auto;animation:pop .3s cubic-bezier(.2,1.2,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(12px)}}
+.x{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:#fff1;color:var(--cream);font-size:1.4rem;cursor:pointer}
+.dialog h2{margin-bottom:12px;padding-right:36px;overflow-wrap:anywhere}
+.dialog dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0;overflow-wrap:anywhere}.dialog dt{color:var(--mut)}
+.tabs{display:flex;gap:8px;margin-bottom:8px}
+#toasts{position:fixed;bottom:16px;right:16px;left:16px;z-index:200;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+.toast{pointer-events:auto;max-width:420px;background:var(--cream);color:var(--navy);padding:12px 16px;border-radius:12px;border-left:6px solid var(--blue);font-weight:500;animation:tin .3s}
+.toast.ok{border-color:var(--ok)}.toast.error{border-color:var(--bad)}@keyframes tin{from{opacity:0;transform:translateY(12px)}}
+footer{padding:28px 0;color:var(--mut);border-top:1px solid rgba(255,255,255,.08);text-align:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:860px){.hero .wrap,.two{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}
+#burger{display:inline-block}#links{display:none;width:100%;flex-direction:column;align-items:stretch;background:var(--navy2);border-radius:14px;padding:8px}
+#links.open{display:flex}.nav{background:rgba(5,11,31,.96)}.hero{padding-top:110px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="sr" href="#main" onclick="event.preventDefault();document.getElementById('main').focus()">Skip to content</a>
+<header class="nav" id="nav"><div class="wrap">
+ <a class="brand" href="#/">Return<b>It</b></a>
+ <button class="btn gh sm" id="burger" aria-expanded="false" aria-controls="links">Menu</button>
+ <nav id="links" aria-label="Main">
+  <a href="#/">Home</a><a href="#/explore">Explore</a><a href="#/report">Report</a><a href="#/claims">Claims</a><a href="#/how">How it works</a><a href="#/about">About</a>
+  <button class="btn cy sm" id="authBtn">Sign in</button>
+ </nav></div></header>
+
+<main id="main" tabindex="-1">
+<section class="page" id="p-home" hidden>
+ <div class="hero"><div class="wrap">
+  <div><h1>Lost something? <em>Let's bring it home.</em></h1>
+   <p class="lead">ReturnIt connects people who lost things with people who found them. Report, browse, claim, and follow the return.</p>
+   <div class="cta"><a class="btn cy" href="#/explore">Explore items</a><a class="btn gh" href="#/report">Report an item</a></div></div>
+  <svg class="art" viewBox="0 0 480 420" role="img" aria-label="Keys, a wallet and headphones connected by dashed lines to a glowing home pin">
+   <defs><radialGradient id="hg"><stop offset="0" stop-color="#22e4ff" stop-opacity=".55"/><stop offset="1" stop-color="#22e4ff" stop-opacity="0"/></radialGradient></defs>
+   <circle class="glow" cx="240" cy="210" r="120" fill="url(#hg)"/>
+   <g fill="none" stroke="#22e4ff" stroke-width="2.5" stroke-linecap="round">
+    <path class="dash" d="M95 95 Q170 120 225 190"/><path class="dash" d="M385 110 Q320 130 258 190"/><path class="dash" d="M240 355 Q240 290 240 240"/></g>
+   <g transform="translate(240 210)"><circle class="pulse" r="26" fill="#22e4ff"/><circle class="pulse" r="26" fill="#22e4ff" style="animation-delay:-1.1s"/>
+    <path d="M0-34 L32-8 H22 V26 H-22 V-8 H-32Z" fill="#f7f3ea"/><rect x="-7" y="6" width="14" height="20" rx="2" fill="#2f5bff"/></g>
+   <g class="float" transform="translate(70 70)"><circle cx="20" cy="20" r="16" fill="none" stroke="#f7f3ea" stroke-width="6"/><path d="M34 26 L90 60 M70 50 v14 M82 57 v12" stroke="#f7f3ea" stroke-width="6" stroke-linecap="round" fill="none"/></g>
+   <g class="float f2" transform="translate(340 70)"><rect width="100" height="68" rx="12" fill="#2f5bff"/><rect x="62" y="22" width="38" height="24" rx="8" fill="#f7f3ea"/><circle cx="76" cy="34" r="4" fill="#2f5bff"/></g>
+   <g class="float f3" transform="translate(190 330)" fill="none" stroke="#ffc857" stroke-width="7" stroke-linecap="round"><path d="M10 50 a40 40 0 0 1 80 0"/><rect x="0" y="48" width="20" height="30" rx="8" fill="#ffc857"/><rect x="80" y="48" width="20" height="30" rx="8" fill="#ffc857"/></g>
+   <g fill="#ff6b7d"><g transform="translate(60 250)"><circle class="pulse" r="10"/><path d="M0 14 L-9-6 A10 10 0 1 1 9-6Z"/></g><g transform="translate(420 280)"><circle class="pulse" r="10" style="animation-delay:-.8s"/><path d="M0 14 L-9-6 A10 10 0 1 1 9-6Z"/></g></g>
+  </svg></div></div>
+ <div class="wrap"><div class="tiles">
+  <a class="tile rv" href="#/explore"><h3>Explore</h3><p>Browse lost and found items reported so far.</p><span>Browse →</span></a>
+  <a class="tile rv" href="#/report"><h3>Report</h3><p>Post a lost or found item for others to see.</p><span>Report →</span></a>
+  <a class="tile rv" href="#/claims"><h3>Claims</h3><p>Review and track ownership claims.</p><span>Open dashboard →</span></a></div></div>
+</section>
+
+<section class="page" id="p-explore" hidden><div class="wrap">
+ <div class="sec-h"><h1>Explore items</h1><p>Live from the ReturnIt server. Search by keyword or filter by status.</p></div>
+ <div class="bar"><form id="sForm" role="search"><label class="sr" for="q">Search items</label><input id="q" type="search" placeholder="Search keyword…" maxlength="80"><button class="btn" type="submit">Search</button></form>
+  <div id="chips" role="group" aria-label="Filter by status"></div></div>
+ <div id="grid" class="grid" aria-live="polite"></div>
+ <div style="text-align:center;margin-top:24px"><button class="btn gh" id="more" hidden>Load more</button></div>
+ <div id="demoWrap" style="margin-top:48px" hidden>
+  <h2 style="font-size:1.6rem">More items to browse</h2>
+  <p class="note" style="margin:6px 0 18px">Sample items for demonstration. They are not stored on the server and cannot be claimed.</p>
+  <div id="demoGrid" class="grid"></div>
+ </div>
+</div></section>
+
+<section class="page" id="p-report" hidden><div class="wrap">
+ <div class="sec-h"><h1>Report an item</h1><p>Tell the community what you lost or found.</p></div>
+ <div class="two">
+  <form class="panel" id="rForm" novalidate>
+   <label for="rt">Title</label><input id="rt" maxlength="80" autocomplete="off"><div class="err" id="e-rt"></div>
+   <label for="rs">Status</label><select id="rs"><option value="LOST">Lost — I'm looking for it</option><option value="FOUND">Found — I have it</option></select>
+   <label for="rl">Location</label><input id="rl" maxlength="120" autocomplete="off"><div class="err" id="e-rl"></div>
+   <label for="rd">Description</label><textarea id="rd" maxlength="500"></textarea><div class="err" id="e-rd"></div>
+   <button class="btn cy" id="rSub" type="submit">Submit report</button></form>
+  <div class="panel cam"><h3>Photo preview</h3>
+   <p class="note">Add a photo using your camera or device. It will upload after the item report is created.</p>
+   <video id="vid" playsinline muted hidden></video><img id="prev" alt="Photo preview (not saved)" hidden><canvas id="cv" hidden></canvas>
+   <div class="err" id="camErr" role="alert"></div>
+   <div class="row"><button class="btn sm" id="cStart" type="button">Use camera</button><button class="btn cy sm" id="cShot" type="button" hidden>Capture</button>
+    <button class="btn gh sm" id="cRe" type="button" hidden>Retake</button><button class="btn gh sm" id="cUp" type="button">Upload from device</button>
+    <button class="btn gh sm" id="cRm" type="button" hidden>Remove</button><input id="cFile" type="file" accept="image/*" hidden></div></div>
+ </div></div></section>
+
+<section class="page" id="p-claims" hidden><div class="wrap">
+ <div class="sec-h"><h1>Claims dashboard</h1><p>Sign in to see claims. Approve, reject and complete actions are enforced by the server and may be admin-only.</p></div>
+ <div id="cBox"></div></div></section>
+
+<section class="page" id="p-how" hidden><div class="wrap">
+ <div class="sec-h"><h1>How it works</h1></div>
+ <div class="steps">
+  <div class="card rv"><h3>Report</h3><p>Post an item as lost or found with a title, location and description.</p></div>
+  <div class="card rv"><h3>Claim</h3><p>If you recognise a found item, send a claim with your name and a message that proves it is yours.</p></div>
+  <div class="card rv"><h3>Review</h3><p>An administrator reviews each claim and approves or rejects it.</p></div>
+  <div class="card rv"><h3>Return</h3><p>Once the handover happens, the claim is completed and the item is marked returned.</p></div></div>
+ <p style="margin-top:28px"><a class="btn cy" href="#/report">Report an item</a></p></div></section>
+
+<section class="page" id="p-about" hidden><div class="wrap">
+ <div class="sec-h"><h1>About ReturnIt</h1></div>
+ <div class="panel rv" style="max-width:720px"><p>ReturnIt is a hackathon project: a simple, shared place where lost things and found things can meet. Everything shown comes from a real backend (Spring Boot and MySQL); nothing on this site is pre-filled or made up.</p>
+  <p style="margin-top:12px">Our goal is modest: make it easier for honest people to return what isn't theirs, and for owners to get it back with a clear, reviewed process.</p>
+  <p style="margin-top:12px;color:var(--mut)">We don't publish statistics or testimonials because we don't have any yet.</p></div></div></section>
+</main>
+<footer><div class="wrap">ReturnIt · Lost something? Let's bring it home.</div></footer>
+
+<div class="overlay" id="modal" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="mt" tabindex="-1">
+ <button class="x" id="mx" aria-label="Close dialog">×</button><h2 id="mt"></h2><div id="mb"></div></div></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+"use strict";
+const API_BASE = "http://localhost:8089"; // Keep this in sync with your running Spring Boot port
+const PAGE_SIZE = 12;
+
+/* ---------- safe DOM helpers (no innerHTML anywhere) ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+function h(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) e.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat()) if (c != null && c !== false) e.append(c); // strings become text nodes
+  return e;
+}
+const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
+const badge = s => h("span", { class: "badge s-" + String(s).replace(/[^A-Z]/g, "") }, s || "UNKNOWN");
+
+function toast(msg, type = "info") {
+  const t = h("div", { class: "toast " + type, role: type === "error" ? "alert" : "status" }, msg);
+  $("#toasts").append(t); setTimeout(() => t.remove(), 5500);
+}
+
+/* ---------- session: memory only, never persisted ---------- */
+let authHeader = null, userLabel = null;
+function basic(email, pw) { // UTF-8 safe Basic header
+  const b = new TextEncoder().encode(email + ":" + pw);
+  return "Basic " + btoa(String.fromCharCode(...b));
+}
+
+/* ---------- API layer ---------- */
+function explain(status, data) {
+  const m = data && (data.message || data.error || (typeof data === "string" ? data : ""));
+  const extra = m ? " (" + String(m).slice(0, 200) + ")" : "";
+  switch (status) {
+    case 0: return "Cannot reach the server" + (API_BASE ? " at " + API_BASE : "") + ". Is the backend running (and CORS allowed)?";
+    case 400: return "The server rejected the data" + extra + ".";
+    case 401: return "Authentication required or credentials incorrect. Please sign in.";
+    case 403: return "You don't have permission for this action (admin only?).";
+    case 404: return "Not found. It may have been removed.";
+    case 409: return "Conflict" + (extra || ": this action isn't allowed in the current state") + ".";
+    default: return status >= 500 ? "Server error. Please try again shortly." + extra : "Unexpected response (" + status + ")" + extra;
+  }
+}
+async function api(path, { method = "GET", body, auth } = {}) {
+  const headers = { Accept: "application/json" };
+  const a = auth || authHeader; if (a) headers.Authorization = a;
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+  let res;
+  try { res = await fetch(API_BASE + path, { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined }); }
+  catch { const e = new Error(explain(0)); e.status = 0; throw e; }
+  const txt = await res.text(); let data = null;
+  if (txt) { try { data = JSON.parse(txt); } catch { data = txt; } }
+  if (!res.ok) { const e = new Error(explain(res.status, data)); e.status = res.status; throw e; }
+  return data;
+}
+async function uploadItemImage(itemId, file) {
+  const form = new FormData();
+  form.append("image", file, file.name || "returnit-photo.jpg");
+  const headers = {};
+  if (authHeader) headers.Authorization = authHeader;
+  let res;
+  try {
+    res = await fetch(API_BASE + "/items/" + encodeURIComponent(itemId) + "/image", {
+      method: "POST", headers, body: form
+    });
+  } catch {
+    const e = new Error("The item was created, but its photo could not reach the server.");
+    e.status = 0; throw e;
+  }
+  const txt = await res.text();
+  let data = null;
+  if (txt) { try { data = JSON.parse(txt); } catch { data = txt; } }
+  if (!res.ok) { const e = new Error("Item was created, but photo upload failed: " + explain(res.status, data)); e.status = res.status; throw e; }
+  return data;
+}
+/* Page vs array: Spring may return a plain array or a Page object ({content:[...]}). */
+const asList = d => Array.isArray(d) ? d : (d && Array.isArray(d.content) ? d.content : []);
+/* Search: assumed GET /items/search?keyword=… returning the same shape as /items. */
+const fetchItems = kw => api(kw ? "/items/search?keyword=" + encodeURIComponent(kw) : "/items").then(asList);
+/* Pagination: no server paging is documented, so "load more" reveals the next slice client-side. */
+
+/* ---------- modal with focus trap ---------- */
+let lastFocus = null, onModalClose = null;
+const modal = $("#modal"), dlg = $(".dialog", modal);
+function openModal(title, nodes, onClose) {
+  if (!modal.hidden) closeModal(); else lastFocus = document.activeElement;
+  $("#mt").textContent = title; const b = $("#mb"); clear(b); [].concat(nodes).forEach(n => b.append(n));
+  onModalClose = onClose || null; modal.hidden = false; document.body.style.overflow = "hidden";
+  (b.querySelector("input,textarea,button,select") || dlg).focus();
+}
+function closeModal() {
+  if (modal.hidden) return; modal.hidden = true; document.body.style.overflow = "";
+  const f = onModalClose; onModalClose = null; if (f) f();
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+$("#mx").onclick = closeModal;
+modal.addEventListener("mousedown", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => {
+  if (modal.hidden) return;
+  if (e.key === "Escape") return closeModal();
+  if (e.key !== "Tab") return;
+  const f = [...dlg.querySelectorAll("button,input,textarea,select,a[href]")].filter(x => !x.disabled && x.offsetParent !== null);
+  if (!f.length) return e.preventDefault();
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === dlg)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+function confirmDialog(title, text, label, cls) {
+  return new Promise(res => {
+    let done = false; const fin = v => { if (!done) { done = true; res(v); } };
+    openModal(title, [h("p", {}, text), h("div", { class: "row" },
+      h("button", { class: "btn " + (cls || ""), onclick: () => { fin(true); closeModal(); } }, label),
+      h("button", { class: "btn gh", onclick: () => closeModal() }, "Cancel"))], () => fin(false));
+  });
+}
+
+/* ---------- auth UI ---------- */
+function updateAuthBtn() { $("#authBtn").textContent = authHeader ? "Sign out (" + userLabel + ")" : "Sign in"; }
+/* No login endpoint: verify credentials via GET /claims. 200 or 403 means the credentials were accepted
+   (403 = authenticated but not allowed to list claims); 401 means wrong credentials. */
+async function login(email, pw) {
+  const hd = basic(email, pw);
+  try { await api("/claims", { auth: hd }); }
+  catch (e) { if (e.status !== 403) throw e; }
+  authHeader = hd; userLabel = email; updateAuthBtn();
+}
+function openAuth(startTab = "in") {
+  const body = h("div"); const tabs = h("div", { class: "tabs" }); const form = h("form", { novalidate: true });
+  let tab = startTab;
+  function draw() {
+    clear(tabs); clear(form);
+    [["in", "Sign in"], ["up", "Create account"]].forEach(([k, t]) =>
+      tabs.append(h("button", { type: "button", class: "chip", "aria-pressed": String(tab === k), onclick: () => { tab = k; draw(); } }, t)));
+    if (tab === "up") form.append(h("label", { for: "an" }, "Name"), h("input", { id: "an", autocomplete: "name", required: true }));
+    form.append(h("label", { for: "ae" }, "Email"), h("input", { id: "ae", type: "email", autocomplete: "username", required: true }),
+      h("label", { for: "ap" }, "Password"), h("input", { id: "ap", type: "password", autocomplete: tab === "up" ? "new-password" : "current-password", required: true }),
+      h("div", { class: "err", id: "ae-err", role: "alert" }),
+      h("p", { class: "note" }, "Credentials stay in memory only and are lost on refresh."),
+      h("button", { class: "btn cy", type: "submit" }, tab === "up" ? "Create account" : "Sign in"));
+  }
+  form.addEventListener("submit", async ev => {
+    ev.preventDefault(); const err = $("#ae-err"); err.textContent = "";
+    const email = $("#ae").value.trim(), pw = $("#ap").value, name = tab === "up" ? $("#an").value.trim() : "";
+    if (!email || !pw || (tab === "up" && !name)) { err.textContent = "Please fill in every field."; return; }
+    const btn = form.querySelector("button[type=submit]"); btn.disabled = true;
+    try {
+      if (tab === "up") await api("/auth/register", { method: "POST", body: { name, email, password: pw }, auth: "" });
+      await login(email, pw);
+      toast(tab === "up" ? "Account created and signed in." : "Signed in.", "ok"); closeModal(); route(true);
+    } catch (e) {
+      err.textContent = tab === "in" && e.status === 401 ? "Email or password is incorrect." : e.message;
+      btn.disabled = false;
+    }
+  });
+  body.append(tabs, form); draw(); openModal("Welcome to ReturnIt", body);
+}
+$("#authBtn").onclick = () => {
+  if (authHeader) { authHeader = null; userLabel = null; updateAuthBtn(); toast("Signed out."); route(true); } else openAuth();
+};
+
+/* ---------- Explore ---------- */
+const ex = { items: [], filter: "ALL", q: "", shown: PAGE_SIZE, loaded: false, busy: false };
+function drawChips() {
+  const c = $("#chips"); clear(c);
+  ["ALL", "LOST", "FOUND", "RETURNED"].forEach(s => c.append(h("button", { class: "chip", "aria-pressed": String(ex.filter === s),
+    onclick: () => { ex.filter = s; ex.shown = PAGE_SIZE; drawChips(); drawGrid(); } }, s === "ALL" ? "All" : s[0] + s.slice(1).toLowerCase())));
+}
+async function loadItems() {
+  ex.busy = true; ex.err = null; drawGrid();
+  try { ex.items = await fetchItems(ex.q); ex.loaded = true; }
+  catch (e) { ex.err = e; if (e.status === 401) toast(e.message, "error"); }
+  ex.busy = false; drawGrid();
+}
+function drawGrid() {
+  const g = $("#grid"); clear(g); const more = $("#more"); more.hidden = true;
+  if (ex.busy) { for (let i = 0; i < 6; i++) g.append(h("div", { class: "skel" })); return; }
+  if (ex.err) { g.append(h("div", { class: "state", style: "grid-column:1/-1" }, h("h3", {}, "Couldn't load items"), h("p", {}, ex.err.message),
+    h("button", { class: "btn", onclick: loadItems }, "Retry"))); return; }
+  const list = ex.items.filter(i => ex.filter === "ALL" || i.status === ex.filter);
+  if (!list.length) { g.append(h("div", { class: "state", style: "grid-column:1/-1" }, h("h3", {}, "Nothing here yet"),
+    h("p", {}, ex.q || ex.filter !== "ALL" ? "No items match your search or filter." : "No items have been reported."),
+    h("a", { class: "btn cy", href: "#/report" }, "Report an item"))); return; }
+  list.slice(0, ex.shown).forEach((it, i) => {
+    const card = h("article", { class: "card", style: "--i:" + (i % PAGE_SIZE) });
+    const photo = h("img", { class: "item-photo", src: API_BASE + "/items/" + encodeURIComponent(it.id) + "/image",
+      alt: "Photo of " + (it.title || "reported item"), loading: "lazy",
+      onerror: e => { e.currentTarget.hidden = true; } });
+    card.append(photo, badge(it.status), h("h3", {}, it.title || "Untitled"),
+      h("p", { class: "clamp" }, it.description || ""),
+      h("p", {}, "📍 " + (it.location || "Unknown location")),
+      h("button", { class: "btn sm", onclick: e => showItem(it.id, e.currentTarget) }, "View details"));
+    g.append(card);
+  });
+  if (list.length > ex.shown) more.hidden = false;
+}
+$("#more").onclick = () => { ex.shown += PAGE_SIZE; drawGrid(); };
+$("#sForm").onsubmit = e => { e.preventDefault(); ex.q = $("#q").value.trim(); ex.shown = PAGE_SIZE; loadItems(); };
+
+async function showItem(id) {
+  openModal("Loading…", h("div", { class: "skel" }));
+  let it;
+  try { it = await api("/items/" + encodeURIComponent(id)); }
+  catch (e) { openModal("Couldn't load item", [h("p", {}, e.message), h("button", { class: "btn", onclick: () => showItem(id) }, "Retry")]); return; }
+  const detailPhoto = h("img", {
+    class: "item-photo",
+    src: API_BASE + "/items/" + encodeURIComponent(it.id) + "/image",
+    alt: "Photo of " + (it.title || "reported item"),
+    onerror: e => { e.currentTarget.hidden = true; }
+  });
+  const nodes = [detailPhoto, badge(it.status), h("dl", {}, h("dt", {}, "Location"), h("dd", {}, it.location || "—"), h("dt", {}, "Description"), h("dd", {}, it.description || "—"))];
+  if (it.status === "FOUND") {
+    const f = h("form", { novalidate: true }, h("h3", {}, "Is this yours? Send a claim"),
+      h("label", { for: "cn" }, "Your name"), h("input", { id: "cn", maxlength: 80, autocomplete: "name" }),
+      h("label", { for: "cm" }, "Message (how can you prove it's yours?)"), h("textarea", { id: "cm", maxlength: 500 }),
+      h("div", { class: "err", id: "cerr", role: "alert" }), h("button", { class: "btn cy", type: "submit" }, "Submit claim"));
+    f.addEventListener("submit", async ev => {
+      ev.preventDefault(); const n = $("#cn").value.trim(), m = $("#cm").value.trim(), er = $("#cerr"); er.textContent = "";
+      if (n.length < 2) { er.textContent = "Please enter your name."; return; }
+      if (m.length < 10) { er.textContent = "Please write at least 10 characters."; return; }
+      const b = f.querySelector("button[type=submit]"); b.disabled = true;
+      try { await api("/claims/items/" + encodeURIComponent(it.id), { method: "POST", body: { claimantName: n, message: m } });
+        toast("Claim submitted. An admin will review it.", "ok"); closeModal(); }
+      catch (e) { er.textContent = e.message; b.disabled = false; if (e.status === 401) openAuth(); }
+    });
+    nodes.push(f);
+  } else nodes.push(h("p", { class: "note" }, it.status === "LOST" ? "Claims can only be made on found items. If you've found this, report it as found." : "This item has already been returned."));
+  openModal(it.title || "Item", nodes);
+}
+
+/* ---------- Report ---------- */
+const rf = { t: $("#rt"), s: $("#rs"), l: $("#rl"), d: $("#rd") };
+function validate() {
+  const m = { t: rf.t.value.trim().length < 3 ? "Title must be at least 3 characters." : "",
+    l: rf.l.value.trim().length < 2 ? "Please enter a location." : "",
+    d: rf.d.value.trim().length < 10 ? "Description must be at least 10 characters." : "" };
+  for (const k in m) { $("#e-r" + k).textContent = m[k]; rf[k].setAttribute("aria-invalid", String(!!m[k])); }
+  return !Object.values(m).some(Boolean);
+}
+$("#rForm").addEventListener("submit", async e => {
+  e.preventDefault(); if (!validate()) return;
+  const b = $("#rSub"); b.disabled = true; b.textContent = "Submitting…";
+  try {
+    const created = await api("/items", { method: "POST", body: { title: rf.t.value.trim(), description: rf.d.value.trim(), location: rf.l.value.trim(), status: rf.s.value } });
+    const createdId = created && created.id;
+    if (photoBlob) {
+      if (!createdId) throw new Error("The item was created, but the server response did not include its ID, so the photo could not be attached.");
+      b.textContent = "Uploading photo…";
+      try {
+        await uploadItemImage(createdId, photoBlob);
+        toast("Item and photo saved successfully!", "ok");
+      } catch (photoError) {
+        toast(photoError.message, "error");
+      }
+    } else {
+      toast("Item reported — the server confirmed it.", "ok");
+    }
+    e.target.reset(); removePhoto(); ex.q = ""; $("#q").value = ""; ex.filter = "ALL"; drawChips();
+    ex.loaded = false;
+    await loadItems(); location.hash = "#/explore";
+  } catch (er) { toast(er.message, "error"); if (er.status === 401) openAuth(); }
+  b.disabled = false; b.textContent = "Submit report";
+});
+
+/* ---------- Camera (preview only; never uploaded) ---------- */
+let stream = null, objUrl = null, photoBlob = null;
+const cam = { v: $("#vid"), p: $("#prev"), c: $("#cv"), err: $("#camErr") };
+function camUI() {
+  const live = !!stream, has = !cam.p.hidden;
+  cam.v.hidden = !live; $("#cShot").hidden = !live; $("#cStart").hidden = live || has; $("#cUp").hidden = live || has;
+  $("#cRe").hidden = !has; $("#cRm").hidden = !has;
+}
+async function startCam() {
+  cam.err.textContent = "";
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { cam.err.textContent = "Camera isn't supported here (needs HTTPS or localhost). Try uploading instead."; return; }
+  try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+    cam.p.hidden = true; cam.v.srcObject = stream; await cam.v.play(); }
+  catch (e) { stopCam(); cam.err.textContent = e.name === "NotAllowedError" ? "Camera permission was denied." : e.name === "NotFoundError" ? "No camera found." : "Couldn't start the camera."; }
+  camUI();
+}
+function stopCam() { if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; cam.v.srcObject = null; camUI(); }
+function setPreview(src, blob = null) { cam.p.src = src; cam.p.hidden = false; photoBlob = blob; camUI(); }
+function removePhoto() { stopCam(); if (objUrl) { URL.revokeObjectURL(objUrl); objUrl = null; } cam.p.removeAttribute("src"); cam.p.hidden = true; photoBlob = null; cam.err.textContent = ""; camUI(); }
+$("#cStart").onclick = startCam;
+$("#cShot").onclick = () => {
+  if (!cam.v.videoWidth) { cam.err.textContent = "Camera not ready yet."; return; }
+  cam.c.width = cam.v.videoWidth; cam.c.height = cam.v.videoHeight;
+  cam.c.getContext("2d").drawImage(cam.v, 0, 0);
+  cam.c.toBlob(blob => {
+    if (!blob) { cam.err.textContent = "Couldn't capture the photo. Please try again."; return; }
+    if (objUrl) URL.revokeObjectURL(objUrl);
+    objUrl = URL.createObjectURL(blob);
+    stopCam();
+    setPreview(objUrl, new File([blob], "returnit-camera.jpg", { type: "image/jpeg" }));
+  }, "image/jpeg", 0.85);
+};
+$("#cRe").onclick = () => { removePhoto(); startCam(); };
+$("#cRm").onclick = removePhoto;
+$("#cUp").onclick = () => $("#cFile").click();
+$("#cFile").onchange = e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  if (!f.type.startsWith("image/")) { cam.err.textContent = "Please choose an image file."; return; }
+  if (f.size > 5 * 1024 * 1024) { cam.err.textContent = "Image is too large (max 5 MB)."; return; }
+  removePhoto(); objUrl = URL.createObjectURL(f); setPreview(objUrl, f);
+};
+window.addEventListener("pagehide", stopCam);
+
+/* ---------- Claims dashboard ---------- */
+async function renderClaims() {
+  const box = $("#cBox"); clear(box);
+  if (!authHeader) { box.append(h("div", { class: "state" }, h("h3", {}, "Sign in required"), h("p", {}, "Claims are protected by the server."),
+    h("button", { class: "btn cy", onclick: () => openAuth() }, "Sign in"))); return; }
+  const g = h("div", { class: "grid" }); for (let i = 0; i < 3; i++) g.append(h("div", { class: "skel" })); box.append(g);
+  let list;
+  try { list = asList(await api("/claims")); }
+  catch (e) { clear(box); box.append(h("div", { class: "state" }, h("h3", {}, e.status === 403 ? "Not permitted" : "Couldn't load claims"), h("p", {}, e.message),
+      h("button", { class: "btn", onclick: renderClaims }, "Retry"))); if (e.status === 401) { authHeader = null; updateAuthBtn(); } return; }
+  clear(box);
+  if (!list.length) { box.append(h("div", { class: "state" }, h("h3", {}, "No claims yet"), h("p", {}, "Claims will appear here once someone submits one."))); return; }
+  const grid = h("div", { class: "grid" });
+  list.forEach((c, i) => {
+    const acts = c.status === "PENDING" ? [["approve", "Approve", "ok"], ["reject", "Reject", "bad"]] : c.status === "APPROVED" ? [["complete", "Mark completed", "cy"]] : [];
+    grid.append(h("article", { class: "card", style: "--i:" + (i % 12) },
+      h("div", { class: "row", style: "margin:0;justify-content:space-between" }, h("strong", {}, "Claim #" + c.id), badge(c.status)),
+      h("p", {}, h("b", {}, "Claimant: "), c.claimantName || "—"),
+      h("p", {}, h("b", {}, "Item: "), c.item ? (c.item.title || "Item #" + c.item.id) + " · " : "—", c.item && c.item.status ? badge(c.item.status) : null),
+      h("p", {}, c.message || ""),
+      acts.length ? h("div", { class: "row" }, acts.map(([a, l, cls]) => h("button", { class: "btn sm " + cls, onclick: ev => adminAct(c, a, l, ev.currentTarget) }, l))) : null));
+  });
+  box.append(grid);
+}
+async function adminAct(c, action, label, btn) {
+  const ok = await confirmDialog(label + " claim #" + c.id + "?", "Claimant: " + (c.claimantName || "unknown") + ". The server will apply this change.", label, action === "reject" ? "bad" : "cy");
+  if (!ok) return; btn.disabled = true;
+  try {
+    const r = await api("/claims/" + encodeURIComponent(c.id) + "/" + action, { method: "PATCH" });
+    const st = r && r.item && r.item.status; // server may return the updated claim with its item
+    toast("Claim #" + c.id + " " + (r && r.status ? "is now " + r.status : "updated") + (st ? ". Item is now " + st + "." : "."), "ok");
+    ex.loaded = false; await renderClaims();
+  } catch (e) { toast(e.message, "error"); btn.disabled = false; }
+}
+
+/* ---------- Router ---------- */
+const routes = { "/": ["home", "Home"], "/explore": ["explore", "Explore"], "/report": ["report", "Report an item"], "/claims": ["claims", "Claims"], "/how": ["how", "How it works"], "/about": ["about", "About"] };
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .15 }) : null;
+function route(force) {
+  let r = location.hash.slice(1) || "/"; if (!routes[r]) { location.replace("#/"); return; }
+  const [id, title] = routes[r];
+  document.querySelectorAll(".page").forEach(p => p.hidden = p.id !== "p-" + id);
+  document.querySelectorAll("#links a").forEach(a => a.getAttribute("href") === "#" + r ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  document.title = title + " · ReturnIt"; closeModal(); if (r !== "/report") stopCam();
+  $("#links").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false");
+  if (!force) { window.scrollTo(0, 0); $("#main").focus({ preventScroll: true }); }
+  if (r === "/explore" && !ex.loaded && !ex.busy) loadItems();
+  if (r === "/claims") renderClaims();
+  document.querySelectorAll("#p-" + id + " .rv").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+}
+window.addEventListener("hashchange", () => route());
+$("#burger").onclick = () => { const o = $("#links").classList.toggle("open"); $("#burger").setAttribute("aria-expanded", String(o)); };
+const onScroll = () => $("#nav").classList.toggle("solid", scrollY > 30);
+addEventListener("scroll", onScroll, { passive: true });
+
+/* ---------- Sample items (front-end demo only, NOT from the server) ---------- */
+const DEMO_ITEMS = [
+  { id: "demo-1",  emoji: "🔑", bg: ["#2f5bff", "#22e4ff"], status: "FOUND", title: "Bunch of house keys", location: "Central Library, reading hall", description: "Three keys on a blue ring with a small brass tag. Found on a desk near the window." },
+  { id: "demo-2",  emoji: "👛", bg: ["#7a3cff", "#2f5bff"], status: "LOST",  title: "Brown leather wallet", location: "City Park, near the fountain", description: "Slim brown wallet with a few cards inside. Lost during the evening walk." },
+  { id: "demo-3",  emoji: "🎧", bg: ["#0b1636", "#2f5bff"], status: "FOUND", title: "Wireless headphones", location: "Metro station, platform 2", description: "Black over-ear headphones in a grey carry case. Found on a bench." },
+  { id: "demo-4",  emoji: "🎒", bg: ["#ff8a3c", "#ffc857"], status: "LOST",  title: "Green school backpack", location: "Bus stop on Main Road", description: "Green backpack with a keychain on the zipper. Contains notebooks." },
+  { id: "demo-5",  emoji: "📱", bg: ["#22e4ff", "#3ddc97"], status: "FOUND", title: "Smartphone with cracked case", location: "Coffee shop, corner table", description: "Phone with a clear cracked case and a blue wallpaper. Handed in at the counter." },
+  { id: "demo-6",  emoji: "☂️", bg: ["#3d4a8f", "#a9b4d6"], status: "RETURNED", title: "Black umbrella", location: "Office lobby", description: "Large black umbrella with a wooden handle. Already returned to its owner." },
+  { id: "demo-7",  emoji: "👓", bg: ["#ff6b7d", "#ffc857"], status: "LOST",  title: "Round prescription glasses", location: "Community garden", description: "Thin gold frames in a soft red case. Lost near the benches." },
+  { id: "demo-8",  emoji: "⌚", bg: ["#101c42", "#22e4ff"], status: "FOUND", title: "Silver wrist watch", location: "Gym changing room", description: "Silver analog watch with a brown strap. Found on a locker bench." },
+  { id: "demo-9",  emoji: "💻", bg: ["#2f5bff", "#7a3cff"], status: "LOST",  title: "13-inch laptop in grey sleeve", location: "University canteen", description: "Silver laptop in a grey felt sleeve with a sticker on it." },
+  { id: "demo-10", emoji: "🧴", bg: ["#3ddc97", "#22e4ff"], status: "FOUND", title: "Steel water bottle", location: "Sports ground", description: "Teal steel bottle with a dent near the bottom. Found beside the track." },
+  { id: "demo-11", emoji: "📘", bg: ["#ffc857", "#ff8a3c"], status: "LOST",  title: "Passport holder", location: "Railway station waiting room", description: "Blue passport holder with travel documents. Please report if found." },
+  { id: "demo-12", emoji: "📷", bg: ["#050b1f", "#2f5bff"], status: "FOUND", title: "Compact camera", location: "Lake viewpoint", description: "Small black camera with a wrist strap. Found on the viewing deck." }
+];
+/* Inline SVG illustration as a data URI: no external image hosting needed. */
+function demoPhoto(emoji, bg) {
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + bg[0] + '"/><stop offset="1" stop-color="' + bg[1] + '"/></linearGradient></defs><rect width="400" height="240" fill="url(#g)"/><text x="200" y="150" font-size="110" text-anchor="middle">' + emoji + '</text></svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+function showDemoItem(it) {
+  openModal(it.title, [
+    h("img", { class: "item-photo", src: demoPhoto(it.emoji, it.bg), alt: it.title }),
+    h("div", { class: "row" }, badge(it.status), h("span", { class: "badge" }, "SAMPLE")),
+    h("dl", {}, h("dt", {}, "Location"), h("dd", {}, it.location), h("dt", {}, "Description"), h("dd", {}, it.description)),
+    h("p", { class: "note" }, "Sample item for demonstration. It isn't stored on the server, so claims are disabled. Real items above can be claimed.")
+  ]);
+}
+function drawDemo() {
+  const g = $("#demoGrid"), wrap = $("#demoWrap"); clear(g);
+  const q = ex.q.toLowerCase();
+  const list = DEMO_ITEMS.filter(i => (ex.filter === "ALL" || i.status === ex.filter) &&
+    (!q || (i.title + " " + i.description + " " + i.location).toLowerCase().includes(q)));
+  wrap.hidden = !list.length;
+  list.forEach((it, i) => g.append(h("article", { class: "card", style: "--i:" + (i % PAGE_SIZE) },
+    h("img", { class: "item-photo", src: demoPhoto(it.emoji, it.bg), alt: it.title, loading: "lazy" }),
+    h("div", { class: "row", style: "margin:0" }, badge(it.status), h("span", { class: "badge" }, "SAMPLE")),
+    h("h3", {}, it.title), h("p", { class: "clamp" }, it.description), h("p", {}, "📍 " + it.location),
+    h("button", { class: "btn sm", onclick: () => showDemoItem(it) }, "View details"))));
+}
+/* Hook: redraw sample items whenever the main grid redraws (search, chips, load more, retry). */
+const _drawGridOriginal = drawGrid;
+drawGrid = function () { _drawGridOriginal(); drawDemo(); };
+
+drawChips(); camUI(); updateAuthBtn(); onScroll(); route();
+</script>
+</body>
+</html>
